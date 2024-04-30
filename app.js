@@ -18,12 +18,12 @@ var app = express();
 const cors = require('cors');
 
 
+// Configura CORS
 const corsOptions = {
-  origin: ['http://localhost:3030', 'http://localhost:3030'], // Allowed origins (adjust as needed)
-  methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed HTTP methods
-  headers: ['Content-Type', 'Authorization'], // Allowed request headers
-  exposedHeaders: ['Content-Range', 'X-Content-Range'], // Exposed response headers
-  credentials: true // Enable cookies for cross-origin requests
+  origin: 'http://localhost:4200', // Reemplaza con el origen permitido (tu frontend)
+  methods: 'GET, POST, PUT, DELETE', // Métodos HTTP permitidos
+  allowedHeaders: ['Content-Type', 'Authorization'], // Headers permitidos
+  credentials: true // Habilita cookies para peticiones CORS (si las usas)
 };
 
 // view engine setup
