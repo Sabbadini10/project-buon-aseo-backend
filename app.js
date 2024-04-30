@@ -36,9 +36,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use(cors(
-  config.application.cors.server
-));
+app.use(cors(corsOptions));
 
 //rutas para apis
 app.use('/api/auth', apiAuthRouter);
