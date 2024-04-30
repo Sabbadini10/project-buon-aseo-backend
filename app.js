@@ -20,7 +20,7 @@ var app = express();
 
 // Configura CORS
 const corsOptions = {
-  origin: 'http://localhost:4200', // Reemplaza con el origen permitido (tu frontend)
+  origin: '*', // Reemplaza con el origen permitido (tu frontend)
   methods: 'GET, POST, PUT, DELETE', // Métodos HTTP permitidos
   allowedHeaders: ['Content-Type', 'Authorization'], // Headers permitidos
   credentials: true // Habilita cookies para peticiones CORS (si las usas)
@@ -45,6 +45,7 @@ app.use('/api/cart', apiCartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
+  console.log(res)
   next(createError(404));
 });
 
