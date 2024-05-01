@@ -20,7 +20,8 @@ var app = express();
 
 // Configura CORS
 const corsOptions = {
-  origin: 'https://project-front-buon-aseo.vercel.app/, http://localhost:4200/', // Reemplaza con el origen permitido (tu frontend)
+  /* origin: 'https://project-front-buon-aseo.vercel.app/, http://localhost:4200/', */
+  origin: '*',
   methods: 'GET, POST, PUT, DELETE', // Métodos HTTP permitidos
   allowedHeaders: ['Content-Type', 'Authorization'], // Headers permitidos
   credentials: true // Habilita cookies para peticiones CORS (si las usas)
