@@ -28,7 +28,6 @@ exports.loginUser = async (req, res) => {
       return res.status(400).json({ error: 'Invalid email or password format' });
     }
 
-    
     const email = req.body.email.trim();
     const password = req.body.password.trim();
 
@@ -53,9 +52,9 @@ exports.loginUser = async (req, res) => {
 
     res.status(200).json({
       message: 'Usuario Logueado con éxito',
-      id: user.id,
+     /*  id: user.id,
       username: user.username,
-      email: user.email,
+      email: user.email, */
       token,
     });
   } catch (error) {
