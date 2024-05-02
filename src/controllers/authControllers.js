@@ -52,9 +52,9 @@ exports.loginUser = async (req, res) => {
 
     res.status(200).json({
       message: 'Usuario Logueado con éxito',
-     /*  id: user.id,
+      id: user.id,
       username: user.username,
-      email: user.email, */
+      email: user.email, 
       token,
     });
   } catch (error) {
