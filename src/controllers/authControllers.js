@@ -25,33 +25,39 @@ exports.loginUser = async (req, res) => {
     const email = req.body.email.trim();
     const password = req.body.password.trim();
 
-   
     const user = await User.findOne({ email });
 
     if (!user) {
-      console.log('error email')
-      return res.status(401).json({ error: 'error email' });
+      console.log('error email');
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      console.log('error password')
-      return res.status(401).json({ error: 'error password' });
+      console.log('error password');
+      return res.status(401).json({ error: 'Invalid email or password' });
     }
 
-    
     const token = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: config.jwtExpiration
     });
+
+    
+    if (useCookies) { 
+      const userId = user._id; 
+      const expiresIn = config.jwtExpiration; 
+      res.cookie('userId', userId, { httpOnly: true, secure: true, maxAge: expiresIn }); 
+    } else { 
+      req.session.userId = user._id; 
+    }
 
     res.status(200).json({
       message: 'Usuario Logueado con éxito',
       id: user.id,
       username: user.username,
-      email: user.email, 
-      token,
+      email: user.email,
+      token 
     });
   } catch (error) {
     console.error(error);
