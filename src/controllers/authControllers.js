@@ -140,25 +140,25 @@ exports.tokenRecover = async (req, res) => {
         // Verificar y decodificar el token
         const decoded = jwt.verify(token, process.env.SECRET_KEY_JWT || config.secret);
         const userId = decoded.userId;
-    
+          console.log(userId);
         // Buscar el usuario por su ID
         const user = await User.findById(userId);
-    
+        console.log(user)
         if (!user) {
           return res.status(404).json({ message: 'Usuario no encontrado' });
         }
     
-        // Comprobar la validez del token de restablecimiento de contraseña
+        
         if (!user.resetToken || user.resetToken !== token || user.resetTokenExpiration < Date.now()) {
           return res.status(400).json({ message: 'Token inválido o caducado' });
         }
     
-        // Hashear la nueva contraseña
+        
         const hashedPassword = await bcrypt.hash(newPassword, 10);
-    
-        // Actualizar la contraseña del usuario
+        console.log(hashedPassword)
+        
         user.password = hashedPassword;
-        user.resetToken = undefined; // Eliminar el token de restablecimiento de contraseña
+        user.resetToken = undefined;
         user.resetTokenExpiration = undefined;
     
         // Guardar los cambios en la base de datos
