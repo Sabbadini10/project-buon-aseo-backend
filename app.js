@@ -19,14 +19,25 @@ var apiCartRouter = require('./src/routes/apiCarts');
 var app = express();
 
 
-const corsOptions = {
+/* const corsOptions = {
   origin: 'https://project-front-buon-aseo.vercel.app/, http://localhost:4200/',
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
   allowedHeaders: ['Content-Type', 'Authorization', 'application/json'],
   credentials: true
-};
+}; */
+
+var allowlist = ['https://project-front-buon-aseo.vercel.app/', 'http://localhost:4200/']
+var corsOptionsDelegate = function (req, callback) {
+  var corsOptions;
+  if (allowlist.indexOf(req.header('Origin')) !== -1) {
+    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+  } else {
+    corsOptions = { origin: false } // disable CORS for this request
+  }
+  callback(null, corsOptions) // callback expects two parameters: error and options
+}
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -40,7 +51,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use(cors(corsOptions));
+/* app.use(cors(corsOptions)); */
+app.use(cors(corsOptionsDelegate));
 
 //rutas para apis
 app.use('/api/auth', apiAuthRouter);
