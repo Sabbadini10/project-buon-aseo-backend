@@ -28,15 +28,23 @@ var app = express();
   credentials: true
 }; */
 
-var allowlist = ['https://project-front-buon-aseo.vercel.app/', 'http://localhost:4200/']
+/* var allowlist = ['https://project-front-buon-aseo.vercel.app/', 'http://localhost:4200/']
 var corsOptionsDelegate = function (req, callback) {
   var corsOptions;
   if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true } // reflect (enable) the requested origin in the CORS response
+    corsOptions = { origin: true }
   } else {
-    corsOptions = { origin: false } // disable CORS for this request
+    corsOptions = { origin: false } 
   }
   callback(null, corsOptions) // callback expects two parameters: error and options
+} */
+
+var corsOptions = {
+  origin: function (origin, callback) {
+    db.loadOrigins(function (error, origins) {
+      callback(error, origins)
+    })
+  }
 }
 
 // view engine setup
@@ -51,13 +59,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-/* app.use(cors(corsOptions)); */
-app.use(cors(corsOptionsDelegate));
+app.use(cors(corsOptions));
+/* app.use(cors(corsOptionsDelegate)); */
 
 //rutas para apis
-app.use('/api/auth', apiAuthRouter);
-app.use('/api/product', apiProductRouter);
-app.use('/api/cart', apiCartRouter);
+app.use('/api/auth', cors(corsOptions), apiAuthRouter);
+app.use('/api/product', cors(corsOptions), apiProductRouter);
+app.use('/api/cart', cors(corsOptions), apiCartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
