@@ -22,12 +22,6 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-    if (!req.body.email || !req.body.password ||
-        typeof req.body.email !== 'string' ||
-        typeof req.body.password !== 'string') {
-      return res.status(400).json({ error: 'Invalid email or password format' });
-    }
-
     const email = req.body.email.trim();
     const password = req.body.password.trim();
 
@@ -35,14 +29,16 @@ exports.loginUser = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      console.log('error email')
+      return res.status(401).json({ error: 'error email' });
     }
 
     
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
-      return res.status(401).json({ error: 'Invalid credentials' });
+      console.log('error password')
+      return res.status(401).json({ error: 'error password' });
     }
 
     
