@@ -20,7 +20,8 @@ var app = express();
 
 
 const corsOptions = {
-  origin: '*',
+  origin: 'https://project-front-buon-aseo.vercel.app/, http://localhost:4200/',
+  /* origin: '*', */
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
