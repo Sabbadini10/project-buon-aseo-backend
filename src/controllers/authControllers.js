@@ -22,25 +22,34 @@ exports.registerUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
   try {
-const email = req.body.email.trim()
-const password = req.body.password.trim()
-
-    const user = await User.find({email: email});
-    if (user.length == 0 ) {
-      return res.status(401).json({ error: 'Credenciales Invalidas' });
+    if (!req.body.email || !req.body.password ||
+        typeof req.body.email !== 'string' ||
+        typeof req.body.password !== 'string') {
+      return res.status(400).json({ error: 'Invalid email or password format' });
     }
 
-    const isMatch = await User.find({password: password});
-    if (isMatch.length == 0 ) {
-      return res.status(401).json({ error: 'Credenciales Invalidas' });
-    } 
+    
+    const email = req.body.email.trim();
+    const password = req.body.password.trim();
 
-  /*   const token = jwt.sign({ id: user.id }, 'llave-buon-aseo', { expiresIn: '30m' });
-     */
+   
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (!isMatch) {
+      return res.status(401).json({ error: 'Invalid credentials' });
+    }
+
+    
     const token = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: config.jwtExpiration
     });
-
 
     res.status(200).json({
       message: 'Usuario Logueado con éxito',
