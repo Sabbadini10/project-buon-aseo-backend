@@ -39,13 +39,13 @@ var corsOptionsDelegate = function (req, callback) {
   callback(null, corsOptions) // callback expects two parameters: error and options
 } */
 
-var corsOptions = {
+/* var corsOptions = {
   origin: function (origin, callback) {
     db.loadOrigins(function (error, origins) {
       callback(error, origins)
     })
   }
-}
+} */
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -59,13 +59,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use(cors(corsOptions));
+app.use(cors());
 /* app.use(cors(corsOptionsDelegate)); */
 
 //rutas para apis
-app.use('/api/auth', cors(corsOptions), apiAuthRouter);
-app.use('/api/product', cors(corsOptions), apiProductRouter);
-app.use('/api/cart', cors(corsOptions), apiCartRouter);
+app.use('/api/auth', apiAuthRouter);
+app.use('/api/product', apiProductRouter);
+app.use('/api/cart', apiCartRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
