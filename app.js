@@ -20,12 +20,10 @@ var app = express();
 
 
 const corsOptions = {
-  /* origin: 'https://project-front-buon-aseo.vercel.app/, http://localhost:4200/', */
-  origin: '*',
+  origin: 'https://project-front-buon-aseo.vercel.app', // Reemplaza con la URL de tu aplicación Angular
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-  preflightContinue: false,
   optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'Authorization', 'application/json'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 };
 
