@@ -9,6 +9,7 @@ var indexRouter = require('./src/routes/index');
 var usersRouter = require('./src/routes/users');
 const cors = require('cors');
 const config = require('./config');
+const bodyParser = require('body-parser');
 
 //iniciando rutas
 var apiAuthRouter = require('./src/routes/apiAuth');
