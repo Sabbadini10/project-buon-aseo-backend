@@ -19,11 +19,11 @@ var apiCartRouter = require('./src/routes/apiCarts');
 var app = express();
 
 const corsOptions = {
-  origin: 'https://project-front-buon-aseo.vercel.app/, http://localhost:4200/',
+  origin: '*',
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
-  allowedHeaders: ['Content-Type', 'Authorization', 'application/json'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }; 
 
