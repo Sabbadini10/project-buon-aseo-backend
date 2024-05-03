@@ -18,26 +18,15 @@ var apiCartRouter = require('./src/routes/apiCarts');
 
 var app = express();
 
-
-/* const corsOptions = {
+const corsOptions = {
   origin: 'https://project-front-buon-aseo.vercel.app/, http://localhost:4200/',
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
   optionsSuccessStatus: 204,
   allowedHeaders: ['Content-Type', 'Authorization', 'application/json'],
   credentials: true
-}; */
+}; 
 
-/* var allowlist = ['https://project-front-buon-aseo.vercel.app/', 'http://localhost:4200/']
-var corsOptionsDelegate = function (req, callback) {
-  var corsOptions;
-  if (allowlist.indexOf(req.header('Origin')) !== -1) {
-    corsOptions = { origin: true }
-  } else {
-    corsOptions = { origin: false } 
-  }
-  callback(null, corsOptions) // callback expects two parameters: error and options
-} */
 
 /* var corsOptions = {
   origin: function (origin, callback) {
@@ -45,21 +34,21 @@ var corsOptionsDelegate = function (req, callback) {
       callback(error, origins)
     })
   }
-} */
+}  */
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+/* app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); */
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use(cors());
+app.use(cors(corsOptions));
 /* app.use(cors(corsOptionsDelegate)); */
 
 //rutas para apis
