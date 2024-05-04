@@ -18,7 +18,7 @@ var apiCartRouter = require('./src/routes/apiCarts');
 
 var app = express();
 
-const corsOptions = {
+ const corsOptions = {
   origin: '*',
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
   preflightContinue: false,
@@ -26,7 +26,7 @@ const corsOptions = {
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true
 }; 
-
+ 
 
 /* var corsOptions = {
   origin: function (origin, callback) {

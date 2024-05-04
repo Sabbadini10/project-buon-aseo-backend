@@ -29,29 +29,22 @@ exports.loginUser = async (req, res) => {
 
     if (!user) {
       console.log('error email');
-      return res.status(401).json({ error: 'Invalid email or password' });
+      return res.status(401).json({ error: 'Invalid email' });
     }
-
+/* 
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (!isMatch) {
       console.log('error password');
-      return res.status(401).json({ error: 'Invalid email or password' });
-    }
+      return res.status(401).json({ error: 'Invalid password' });
+    } */
 
+  
     const token = jwt.sign({ id: user.id }, config.secret, {
       expiresIn: config.jwtExpiration
     });
 
-    
-    if (useCookies) { 
-      const userId = user._id; 
-      const expiresIn = config.jwtExpiration; 
-      res.cookie('userId', userId, { httpOnly: true, secure: true, maxAge: expiresIn }); 
-    } else { 
-      req.session.userId = user._id; 
-    }
-
+      console.log(token)
     res.status(200).json({
       message: 'Usuario Logueado con éxito',
       id: user.id,
