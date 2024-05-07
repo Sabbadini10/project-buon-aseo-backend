@@ -31,13 +31,13 @@ exports.loginUser = async (req, res) => {
       console.log('error email');
       return res.status(401).json({ error: 'Invalid email' });
     }
-/* 
-    const isMatch = await bcrypt.compare(password, user.password);
 
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log('isMatch', isMatch);
     if (!isMatch) {
       console.log('error password');
       return res.status(401).json({ error: 'Invalid password' });
-    } */
+    } 
 
   
     const token = jwt.sign({ id: user.id }, config.secret, {
@@ -48,6 +48,7 @@ exports.loginUser = async (req, res) => {
     res.status(200).json({
       message: 'Usuario Logueado con éxito',
       id: user.id,
+      name: user.name,
       username: user.username,
       email: user.email,
       token 
