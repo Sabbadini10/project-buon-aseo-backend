@@ -8,15 +8,15 @@ const productSchema = new mongoose.Schema({
   idCode: Number,
   price: Number,
   discount: Number,
-  volume: Number,
+  volume: String,
   stock: Number,
   smell: String,
-  dimensions: Number,
+ /*  dimensions: Number,
   quantity: Number,
-  type: String,
+  type: String, */
   description: String,
   image: String,
-  status: Number,
+  /* status: Number, */
   category: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Category',

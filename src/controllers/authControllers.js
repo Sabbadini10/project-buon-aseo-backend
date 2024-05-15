@@ -5,6 +5,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
 const config = require('../config/authConfig')
+const TypeUser = require("../models/Type_user");
 
 
 exports.registerUser = async (req, res) => {
@@ -46,13 +47,18 @@ exports.loginUser = async (req, res) => {
       expiresIn: config.jwtExpiration
     });
 
-      console.log(token)
+    const populatedUser = await user.populate('id_type_user');
+    console.log(populatedUser)
+    
+    const userTypeName = populatedUser.id_type_user.name;
+
+      console.log("este es el tipo de user" + userTypeName)
     res.status(200).json({
       message: 'Usuario Logueado con éxito',
       id: user.id,
       name: user.name,
-      username: user.username,
       email: user.email,
+      role: userTypeName,
       token 
     });
   } catch (error) {
@@ -136,7 +142,7 @@ exports.tokenRecover = async (req, res) => {
 
     exports.resetPassword = async (req, res) => {
       const { token } = req.params;
-      const { newPassword } = req.body;
+      const { password} = req.body;
     
       try {
         // Verificar y decodificar el token
@@ -150,13 +156,13 @@ exports.tokenRecover = async (req, res) => {
           return res.status(404).json({ message: 'Usuario no encontrado' });
         }
     
-        
+          console.log(user)
         if (!user.resetToken || user.resetToken !== token || user.resetTokenExpiration < Date.now()) {
           return res.status(400).json({ message: 'Token inválido o caducado' });
         }
     
         
-        const hashedPassword = await bcrypt.hash(newPassword, 10);
+        const hashedPassword = await bcrypt.hash(password, 10);
         console.log(hashedPassword)
         
         user.password = hashedPassword;

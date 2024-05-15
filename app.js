@@ -6,15 +6,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var indexRouter = require('./src/routes/index');
-var usersRouter = require('./src/routes/users');
+var usersRouter = require('./src/routes/apiUsers');
 const cors = require('cors');
 const config = require('./config');
 const bodyParser = require('body-parser');
 
+
 //iniciando rutas
 var apiAuthRouter = require('./src/routes/apiAuth');
+var apiUserRouter = require('./src/routes/apiUsers');
+var apiCategoryRouter = require('./src/routes/apiCategory');
 var apiProductRouter = require('./src/routes/apiProduct');
 var apiCartRouter = require('./src/routes/apiCarts');
+var apiTypeUserRouter = require('./src/routes/apiTypeUser');
 
 var app = express();
 
@@ -28,13 +32,6 @@ var app = express();
 }; 
  
 
-/* var corsOptions = {
-  origin: function (origin, callback) {
-    db.loadOrigins(function (error, origins) {
-      callback(error, origins)
-    })
-  }
-}  */
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -53,8 +50,11 @@ app.use(cors(corsOptions));
 
 //rutas para apis
 app.use('/api/auth', apiAuthRouter);
+app.use('/api/users', apiUserRouter);
+app.use('/api/category', apiCategoryRouter);
 app.use('/api/product', apiProductRouter);
 app.use('/api/cart', apiCartRouter);
+app.use('/api/userTypes', apiTypeUserRouter); 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
