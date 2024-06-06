@@ -30,9 +30,9 @@ exports.listProducts = async (req, res) => {
   exports.productAdd = async (req, res) => {
     try {
   
-      const { name, category, idCode, price, volume, smell, stock, image, description, discount } = req.body;
+      const { name, category, idCode, price, volume, smell, stock, description, discount } = req.body;
   
-     /*  const image = req.file ? `/img/fotos-productos/productsAdd/${req.file.filename}` : null; */
+      const image = req.file ? `/img/fotos-productos/productsAdd/${req.file.filename}` : null;
   
       const foundCategory = await Category.find({name: category});
   

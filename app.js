@@ -46,6 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use(cors(corsOptions));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 /* app.use(cors(corsOptionsDelegate)); */
 
 //rutas para apis

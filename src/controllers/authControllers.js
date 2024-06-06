@@ -10,10 +10,15 @@ const TypeUser = require("../models/Type_user");
 
 exports.registerUser = async (req, res) => {
   try {
-    const { name, email} = req.body;
-    const { password } = req.body;
+    const { name, email, phone, password} = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);
-    const user = new User({ name, email, password: hashedPassword });
+    const userType = await TypeUser.findOne({ name: 'user' }); // Ajusta el nombre según corresponda
+
+    if (!userType) {
+      return res.status(400).json({ error: 'Error al obtener el tipo de usuario' });
+    }
+
+    const user = new User({ name, email, phone, password: hashedPassword, id_type_user: userType._id  });
     await user.save();
     res.status(201).send('User registered');
   } catch (error) {

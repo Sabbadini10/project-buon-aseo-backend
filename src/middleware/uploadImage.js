@@ -1,17 +1,29 @@
+const multer = require("multer");
+const path = require("path");
 
-const multer = require('multer');
-
-// MULTER
-const storage = multer.diskStorage({
-    destination: './uploads',
+const storageProducts = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, "./uploads/products");
+    },
     filename: (req, file, cb) => {
-        const uniqueFileName = `${Date.now()}-${file.originalname}`;
-        cb(null, uniqueFileName);
+        cb(null, `product-${Date.now()}${path.extname(file.originalname)}`);
     }
-  });
-  
-  const upload = multer({
-    storage: storage,
-  });
-  
-  const multerMiddleware = upload.single('file');
+})
+
+const fileFilter = (req, file, cb) =>{ //Funcion para filtrar tipo de archivos respecto a su extension
+    if (!file.originalname.toLowerCase().match(/\.(jpeg|jpg|png|gif|webp)$/)) {
+        req.fileValidationError = "Solo se permite imagenes jpg, jpeg, png, gif, webp";
+        return cb(null, false, req.fileValidationError)
+    }
+    return cb(null, true)
+}
+
+const uploadProducts = multer({
+    storage: storageProducts,
+    limits: {fileSize: 3000000}, /* 1 millon es 1MB, limita el peso del archivo */
+    fileFilter
+})
+
+module.exports = {
+    uploadProducts
+}
