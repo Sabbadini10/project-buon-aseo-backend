@@ -32,7 +32,7 @@ exports.listProducts = async (req, res) => {
   
       const { name, category, idCode, price, volume, smell, stock, description, discount } = req.body;
   
-      const image = req.file ? `https://mammoth-urial-sabbadini.koyeb.app/uploads/products/${req.file.filename}` : null;
+      const image = req.file ? `/uploads/products/${req.file.filename}` : null;
   
       const foundCategory = await Category.find({name: category});
   
