@@ -33,6 +33,10 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Gender',
   },
+  id_order: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Order',
+  },
   resetToken: { type: String },
   resetTokenExpiration: { type: Date }
 }, {

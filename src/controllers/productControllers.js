@@ -68,8 +68,11 @@ exports.listProducts = async (req, res) => {
 
   exports.productUpdate = async (req, res) => {
     const { id } = req.params;
-  
+    console.log(id)
     try {
+      const image = req.file ? `/uploads/products/${req.file.filename}` : null;
+      console.log(image)
+      console.log(req.body)
       const product = await Product.findByIdAndUpdate(
         id,
         {
@@ -85,7 +88,7 @@ exports.listProducts = async (req, res) => {
             quantity: req.body.quantity,
             type: req.body.type,
             description: req.body.description,
-            image: req.body.image,
+            image: image,
             status: req.body.status,
             category: req.body.category,
           },

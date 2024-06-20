@@ -7,7 +7,7 @@ const { uploadProducts } = require('../middleware/uploadImage');
 router
     .get('/productList', listProducts)
     .get('/productId/:id', getProductById)
-    .put('/productEdit/:id', productUpdate)
+    .put('/productEdit/:id', uploadProducts.single("image"), productUpdate)
     .post('/productAdd', uploadProducts.single("image"), productAdd)
     .delete('/productDelete/:id', deleteProductById)
 

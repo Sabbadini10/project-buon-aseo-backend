@@ -10,8 +10,8 @@ const productSchema = new mongoose.Schema({
   volume: String,
   stock: Number,
   smell: String,
- /*  dimensions: Number,
   quantity: Number,
+ /*  dimensions: Number,
   type: String, */
   description: String,
   image: String,
